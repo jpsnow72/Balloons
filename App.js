@@ -20,6 +20,10 @@ const App = () => {
 		const soundObject = new Audio.Sound();
 
 		try {
+			soundObject.setOnPlaybackStatusUpdate((status) => {
+				if (!status.didJustFinish) return;
+				soundObject.unloadAsync();
+			});
 			await soundObject.loadAsync(require("./assets/sounds/BalloonPop.wav"));
 			await soundObject.playAsync();
 		} catch (error) {
@@ -58,7 +62,9 @@ const App = () => {
 			removeButtonsOffScreen();
 		}, 16); // Adjust the interval based on your requirements
 
-		return () => clearInterval(interval);
+		return () => {
+			clearInterval(interval);
+		};
 	}, []);
 
 	useEffect(() => {

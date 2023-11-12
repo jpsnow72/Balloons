@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { Audio } from "expo-av";
 
 const ButtonSpeeds = [0.1, 0.2, 0.3, 0.4, 0.5]; // Define different speeds for buttons
 
@@ -14,6 +15,17 @@ const generateRandomXPos = () => {
 
 const App = () => {
 	const [buttons, setButtons] = useState([]);
+
+	const playSound = async () => {
+		const soundObject = new Audio.Sound();
+
+		try {
+			await soundObject.loadAsync(require("./assets/sounds/BalloonPop.wav"));
+			await soundObject.playAsync();
+		} catch (error) {
+			console.error("Error loading sound", error);
+		}
+	};
 
 	const addNewButton = () => {
 		const newButton = {
@@ -61,9 +73,7 @@ const App = () => {
 		<View style={styles.container}>
 			{buttons.map((button) => (
 				<TouchableOpacity
-					onPress={() => {
-						console.log("Pressed: " + button.id);
-					}}
+					onPress={playSound}
 					key={button.id}
 					style={[
 						styles.button,

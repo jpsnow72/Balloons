@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text, Image } from "react-native";
 import { Audio } from "expo-av";
 
 const ButtonSpeeds = [0.1, 0.2, 0.3, 0.4, 0.5]; // Define different speeds for buttons
@@ -79,7 +79,10 @@ const App = () => {
 						styles.button,
 						{ top: `${button.position}%`, left: `${button.xPos}%` },
 					]}>
-					<Text>{button.id}</Text>
+					<Image
+						style={styles.buttonImage}
+						source={require("./assets/images/PumpkinBat.gif")}
+					/>
 				</TouchableOpacity>
 			))}
 		</View>
@@ -95,9 +98,13 @@ const styles = StyleSheet.create({
 	score: {},
 	button: {
 		position: "absolute",
-		backgroundColor: "blue",
 		padding: 10,
 		borderRadius: 5,
+	},
+	buttonImage: {
+		width: 100,
+		height: 100,
+		resizeMode: "contain",
 	},
 });
 
